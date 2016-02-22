@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="hunzC2" name="racing" projectType="guiapp" version="1.0.0"
               bundleIdentifier="com.yourcompany.racing" includeBinaryInAppConfig="1"
-              jucerVersion="3.2.0" defines="FMOD_STUDIO=1&#10;FMOD_GAME=1"
+              jucerVersion="4.1.0" defines="FMOD_STUDIO=1&#10;FMOD_GAME=1"
               userNotes="Copy this project and rename FMODExTemplate to your app name in: these settings and in each of the Debug/Release build configurations.&#10;&#10;Use flags above leaving FMOD_STUDIO on. Turn FMOD_GAME on if there is a game app to include too.&#10;&#10;Add the following directories to the root of the project (or remove the parentheses from the directories provided):&#10;&#10;Game: This should contain subdirectories 'mac' and 'win' containing the game applications for Mac/Win. The mac directory is copied into the app bundle in the Xcode project.&#10;&#10;MediaSource: Use this to keep media source files such as the original .WAV, .AIFF, .FDP, and .fspro files.&#10;&#10;Media: This should contain the final media to be stored in the game. This could be .WAV or .AIFF for pure FMOD_EX projects, .FEV and .FSB files for FMOD_DESIGNER projects, and .bank and .bank.strings files for FMOD_STUDIO projects. Again the Media directory is copied into the app bundle on Mac.">
   <MAINGROUP id="X259hq" name="racing">
     <FILE id="Y7grCG" name="MainComponent.cpp" compile="1" resource="0"

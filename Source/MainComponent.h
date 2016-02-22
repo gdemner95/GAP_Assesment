@@ -43,10 +43,29 @@ private:
     typedef PointerDictionary<DataHeader> dataHeaderDictionary;
     dataHeaderDictionary objects;
     Studio::System* system = nullptr;
+    
     EventInstance* carEngine = nullptr;
     EventInstance* carGear = nullptr;
+    EventInstance* carSkid = nullptr;
+    EventInstance* carTyres = nullptr;
+    
+    EventInstance* atmos = nullptr;
+    EventInstance* crowd = nullptr;
+    EventInstance* wires = nullptr;
+    
+    EventInstance* overBridge = nullptr;
+    EventInstance* underBridge = nullptr;
+    EventInstance* tunnel = nullptr;
+    EventInstance* missionControl = nullptr;
+    
     Array<FMOD_RESULT> errExcept;
+    
+    Studio::ParameterInstance* distanceParameter;
+    
     Studio::ParameterInstance* gearParameter;
+    Studio::ParameterInstance* skidParameter;
+    Studio::ParameterInstance* speedParameter;
+    Studio::ParameterInstance* forceParameter;
     int collisionWait;
 
 };

@@ -12,7 +12,7 @@ MainContentComponent::MainContentComponent()
 {
     collisionWait = 100;
     FMOD_Debug_Initialize (FMOD_DEBUG_LEVEL_NONE, FMOD_DEBUG_MODE_TTY, nullptr, nullptr);
-
+    
     setSize (200, 200);
     
     // launches the other, game, app
@@ -103,12 +103,29 @@ void MainContentComponent::handleCreate (String const& name, int gameObjectInsta
     ERRCHECK(system->getEvent(Strings::carEnginePath, &desc));
     ERRCHECK(desc->createInstance(&carEngine));
     ERRCHECK(carEngine->start());
+    ERRCHECK(carEngine->setParameterValue("rpm", 800));
     
-//    ERRCHECK(system->getEvent(Strings::carGearPath, &desc));
-//    ERRCHECK(desc->createInstance(&carGear));
-//    carGear->start();
+    ERRCHECK_EXCEPT (system->getEvent ("event:/car/skid", &desc), errExcept);
+    ERRCHECK(desc->createInstance(&carSkid));
+    ERRCHECK(carSkid->start());
     
+    ERRCHECK_EXCEPT (system->getEvent ("event:/car/tyres", &desc), errExcept);
+    ERRCHECK(desc->createInstance(&carTyres));
+    ERRCHECK(carTyres->start());
     
+    ERRCHECK_EXCEPT (system->getEvent ("event:/environment/atmos", &desc), errExcept);
+    ERRCHECK(desc->createInstance(&atmos));
+    ERRCHECK(atmos->start());
+    
+    ERRCHECK_EXCEPT (system->getEvent ("event:/environment/crowd", &desc), errExcept);
+    ERRCHECK(desc->createInstance(&crowd));
+    ERRCHECK(crowd->start());
+
+    ERRCHECK_EXCEPT (system->getEvent ("event:/environment/electric-wires", &desc), errExcept);
+    ERRCHECK(desc->createInstance(&wires));
+    ERRCHECK(wires->start());
+
+
 }
 
 void MainContentComponent::handleDestroy (String const& name, int gameObjectInstanceID)
@@ -118,7 +135,39 @@ void MainContentComponent::handleDestroy (String const& name, int gameObjectInst
 
 void MainContentComponent::handleVector (String const& name, int gameObjectInstanceID, String const& param, const Vector3* vector)
 {
-    
+//    Logger::outputDebugString (String ("Name: ") + name);
+        FMOD_3D_ATTRIBUTES attr3D;
+        ERRCHECK (system->getListenerAttributes(FMOD_MAIN_LISTENER, &attr3D));
+    if(name == "car"){
+
+        
+//        if(param == "pos"){
+//            Logger::outputDebugString (String ("Name: ")
+//                                       + name
+//                                       + String (" [id = ")
+//                                       + String (gameObjectInstanceID)
+//                                       + String ("]")
+//                                       + String (" Param: ")
+//                                       + String (param)
+//                                       + String (" \n X = ")
+//                                       + String (vector->x)
+//                                       + String (" \n Y = ")
+//                                       + String (vector->y)
+//                                       + String (" \n Z = ")
+//                                       + String (vector->z));
+//        }
+//        
+//        if(param == "vel") attr3D.velocity = *vector;
+//        if(param == "pos") attr3D.position = *vector;
+//        if(param == "dir") attr3D.forward = *vector;
+//        if(param == "up") attr3D.up = *vector;
+        
+       
+        
+    }
+    if(name == "missioncontrol"){
+            printf("crowd vector triggered\n");
+    }
 }
 
 void MainContentComponent::handleHit (String const& name, int gameObjectInstanceID, Collision const& collision)
@@ -133,15 +182,15 @@ void MainContentComponent::handleHit (String const& name, int gameObjectInstance
         }
         
         
-        Logger::outputDebugString (String ("Collision: ")
-                                   + name
-                                   + String (" [id = ")
-                                   + String (gameObjectInstanceID)
-                                   + String ("]")
-                                   + String (" other: ")
-                                   + collision.otherName
-                                   + String (" velocity = ")
-                                   + String (collision.velocity));
+        //        Logger::outputDebugString (String ("Collision: ")
+        //                                   + name
+        //                                   + String (" [id = ")
+        //                                   + String (gameObjectInstanceID)
+        //                                   + String ("]")
+        //                                   + String (" other: ")
+        //                                   + collision.otherName
+        //                                   + String (" velocity = ")
+        //                                   + String (collision.velocity));
         
         // if we got a description then deal with it
         if (desc != nullptr)
@@ -174,15 +223,15 @@ void MainContentComponent::handleHit (String const& name, int gameObjectInstance
 
 void MainContentComponent::handleBool (String const& name, int gameObjectInstanceID, String const& param, bool flag)
 {
-        Logger::outputDebugString (String ("Bool: ")
-                                   + name
-                                   + String (" [id = ")
-                                   + String (gameObjectInstanceID)
-                                   + String ("]")
-                                   + String (" Param: ")
-                                   + param
-                                   + String (" value = ")
-                                   + String (flag));
+//    Logger::outputDebugString (String ("Bool: ")
+//                               + name
+//                               + String (" [id = ")
+//                               + String (gameObjectInstanceID)
+//                               + String ("]")
+//                               + String (" Param: ")
+//                               + param
+//                               + String (" value = ")
+//                               + String (flag));
 }
 
 void MainContentComponent::handleInt (String const& name, int gameObjectInstanceID, String const& param, int value)
@@ -196,31 +245,20 @@ void MainContentComponent::handleInt (String const& name, int gameObjectInstance
             ERRCHECK_EXCEPT(system->getEvent(Strings::carGearPath, &desc), errExcept);
         }
         
-        Logger::outputDebugString (String ("Int: ")
-                                   + name
-                                   + String (" [id = ")
-                                   + String (gameObjectInstanceID)
-                                   + String ("]")
-                                   + String (" param: ")
-                                   + param
-                                   + String (" value = ")
-                                   + String (value));
-        
         // if we got a description then deal with it
         if (desc != nullptr)
         {
             printf("gear changed \n");
-            // get our info about the game object
             DataHeader* vecData = objects.get (getGameInstanceString (name, gameObjectInstanceID));
             
-            // shouldn't happen as we should have added the object in handleCreate()
-            // if we got as far as having a description
             jassert (vecData != nullptr);
             
             // create an instance
             ERRCHECK (desc->createInstance (&carGear));
-            ERRCHECK(carGear->getParameter("blowOff", &gearParameter));
-            float blowOff = value;
+            //get parameter named blowOff
+            ERRCHECK(carGear->getParameter("blowoff", &gearParameter));
+            //asign blowoff the value of the
+            float blowOff = value / 4.0;
             ERRCHECK(gearParameter->setValue(blowOff));
             ERRCHECK(gearParameter->getValue(&blowOff));
             
@@ -240,48 +278,61 @@ void MainContentComponent::handleReal (String const& name, int gameObjectInstanc
     if(collisionWait > 0)
         return;
     else{
+        EventDescription* desc = nullptr;
+        
         
         if(param == "skid"){
+            ERRCHECK(carSkid->getParameter("amount", &skidParameter));
+            float skidValue = value;
             
-            Logger::outputDebugString (String ("Real: ")
-                               + name
-                               + String (" [id = ")
-                               + String (gameObjectInstanceID)
-                               + String ("]")
-                               + String (" Param: ")
-                               + param
-                               + String (" value = ")
-                               + String (value));
+            ERRCHECK(skidParameter->setValue(skidValue));
+            ERRCHECK(skidParameter->getValue(&skidValue));
+
         }
         if(param == "rpm"){
+            
             carEngine->setParameterValue("rpm", value);
             
         }
-//
+        if(param == "speed"){
+            ERRCHECK(carTyres->getParameter("speed", &speedParameter));
+            float speedValue = value;
+            
+            ERRCHECK(speedParameter->setValue(speedValue));
+            ERRCHECK(speedParameter->getValue(&speedValue));
+        }
+        if(param == "force"){
+            ERRCHECK(carTyres->getParameter("force", &forceParameter));
+            float forceValue = value;
+            
+            ERRCHECK(forceParameter->setValue(forceValue));
+            ERRCHECK(forceParameter->getValue(&forceValue));
+        }
+        //seems to repeat the set/get param function.
     }
 }
 void MainContentComponent::handleString (String const& name, int gameObjectInstanceID, String const& param, String const& content)
 {
-        Logger::outputDebugString (String ("String: ")
-                                   + name
-                                   + String (" [id = ")
-                                   + String (gameObjectInstanceID)
-                                   + String ("]")
-                                   + String (" Param: ")
-                                   + param
-                                   + String (" value = ")
-                                   + String (content));
+//    Logger::outputDebugString (String ("String: ")
+//                               + name
+//                               + String (" [id = ")
+//                               + String (gameObjectInstanceID)
+//                               + String ("]")
+//                               + String (" Param: ")
+//                               + param
+//                               + String (" value = ")
+//                               + String (content));
 }
 
 void MainContentComponent::handleOther (String const& name, String const& t, String const& value)
 {
-//        Logger::outputDebugString (String ("Other: ")
-//                                   + name
-//                                   + String (" [id = ")
-//                                   + String (t)
-//                                   + String ("]")
-//                                   + String (" value = ")
-//                                   + String (value));
+    //        Logger::outputDebugString (String ("Other: ")
+    //                                   + name
+    //                                   + String (" [id = ")
+    //                                   + String (t)
+    //                                   + String ("]")
+    //                                   + String (" value = ")
+    //                                   + String (value));
 }
 
 
