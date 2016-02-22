@@ -120,12 +120,12 @@ void MainContentComponent::handleCreate (String const& name, int gameObjectInsta
     ERRCHECK_EXCEPT (system->getEvent ("event:/environment/crowd", &desc), errExcept);
     ERRCHECK(desc->createInstance(&crowd));
     ERRCHECK(crowd->start());
-
+    
     ERRCHECK_EXCEPT (system->getEvent ("event:/environment/electric-wires", &desc), errExcept);
     ERRCHECK(desc->createInstance(&wires));
     ERRCHECK(wires->start());
-
-
+    
+    
 }
 
 void MainContentComponent::handleDestroy (String const& name, int gameObjectInstanceID)
@@ -135,39 +135,59 @@ void MainContentComponent::handleDestroy (String const& name, int gameObjectInst
 
 void MainContentComponent::handleVector (String const& name, int gameObjectInstanceID, String const& param, const Vector3* vector)
 {
-//    Logger::outputDebugString (String ("Name: ") + name);
-        FMOD_3D_ATTRIBUTES attr3D;
-        ERRCHECK (system->getListenerAttributes(FMOD_MAIN_LISTENER, &attr3D));
+    //    Logger::outputDebugString (String ("Name: ") + name);
+    FMOD_3D_ATTRIBUTES car3D;
+    FMOD_3D_ATTRIBUTES wires3D;
+    FMOD_3D_ATTRIBUTES missionControl3D;
+    FMOD_3D_ATTRIBUTES camera3D;
+    ERRCHECK (system->getListenerAttributes(FMOD_MAIN_LISTENER, &camera3D));
     if(name == "car"){
+        ERRCHECK (system->getListenerAttributes(FMOD_MAIN_LISTENER, &car3D));
 
+        if(param == "vel") car3D.velocity = *vector;
+        if(param == "pos") car3D.position = *vector;
+        if(param == "dir") car3D.forward = *vector;
+        if(param == "up") car3D.up = *vector;
         
-//        if(param == "pos"){
-//            Logger::outputDebugString (String ("Name: ")
-//                                       + name
-//                                       + String (" [id = ")
-//                                       + String (gameObjectInstanceID)
-//                                       + String ("]")
-//                                       + String (" Param: ")
-//                                       + String (param)
-//                                       + String (" \n X = ")
-//                                       + String (vector->x)
-//                                       + String (" \n Y = ")
-//                                       + String (vector->y)
-//                                       + String (" \n Z = ")
-//                                       + String (vector->z));
-//        }
-//        
-//        if(param == "vel") attr3D.velocity = *vector;
-//        if(param == "pos") attr3D.position = *vector;
-//        if(param == "dir") attr3D.forward = *vector;
-//        if(param == "up") attr3D.up = *vector;
-        
-       
+        ERRCHECK(carEngine->set3DAttributes(&car3D));
+        ERRCHECK(carSkid->set3DAttributes(&car3D));
+        ERRCHECK(carTyres->set3DAttributes(&car3D));
+    }
+    else if(name == "missioncontrol"){
+        ERRCHECK(crowd->get3DAttributes(&missionControl3D));
+
+        if(param == "vel") missionControl3D.velocity = *vector;
+        if(param == "pos") missionControl3D.position = *vector;
+        if(param == "dir") missionControl3D.forward = *vector;
+        if(param == "up") missionControl3D.up = *vector;
+    
+    }
+    else if(name == "wires"){
+        ERRCHECK(wires->get3DAttributes(&wires3D));
+
+        if(param == "vel") wires3D.velocity = *vector;
+        if(param == "pos") wires3D.position = *vector;
+        if(param == "dir") wires3D.forward = *vector;
+        if(param == "up") wires3D.up = *vector;
         
     }
-    if(name == "missioncontrol"){
-            printf("crowd vector triggered\n");
-    }
+//    float wiresX = wires3D.position.x;
+//    float wiresY = wires3D.position.y;
+//    float wiresZ = wires3D.position.z;
+//    float carX = car3D.position.x;
+//    float carY = car3D.position.y;
+//    float carZ = car3D.position.z;
+//    
+//    float pythag = powf(wiresX - carX,2) + powf(wiresZ - carZ,2);
+//    printf("Pythagoras Theorem = %f\n", pythag);
+//    
+//
+//    
+    ERRCHECK (system->setListenerAttributes(FMOD_MAIN_LISTENER, &camera3D));
+//    ERRCHECK (system->setListenerAttributes(FMOD_MAIN_LISTENER, &wires3D));
+//    ERRCHECK (system->setListenerAttributes(FMOD_MAIN_LISTENER, &missionControl3D));
+
+
 }
 
 void MainContentComponent::handleHit (String const& name, int gameObjectInstanceID, Collision const& collision)
@@ -223,15 +243,15 @@ void MainContentComponent::handleHit (String const& name, int gameObjectInstance
 
 void MainContentComponent::handleBool (String const& name, int gameObjectInstanceID, String const& param, bool flag)
 {
-//    Logger::outputDebugString (String ("Bool: ")
-//                               + name
-//                               + String (" [id = ")
-//                               + String (gameObjectInstanceID)
-//                               + String ("]")
-//                               + String (" Param: ")
-//                               + param
-//                               + String (" value = ")
-//                               + String (flag));
+    //    Logger::outputDebugString (String ("Bool: ")
+    //                               + name
+    //                               + String (" [id = ")
+    //                               + String (gameObjectInstanceID)
+    //                               + String ("]")
+    //                               + String (" Param: ")
+    //                               + param
+    //                               + String (" value = ")
+    //                               + String (flag));
 }
 
 void MainContentComponent::handleInt (String const& name, int gameObjectInstanceID, String const& param, int value)
@@ -287,7 +307,7 @@ void MainContentComponent::handleReal (String const& name, int gameObjectInstanc
             
             ERRCHECK(skidParameter->setValue(skidValue));
             ERRCHECK(skidParameter->getValue(&skidValue));
-
+            
         }
         if(param == "rpm"){
             
@@ -313,15 +333,15 @@ void MainContentComponent::handleReal (String const& name, int gameObjectInstanc
 }
 void MainContentComponent::handleString (String const& name, int gameObjectInstanceID, String const& param, String const& content)
 {
-//    Logger::outputDebugString (String ("String: ")
-//                               + name
-//                               + String (" [id = ")
-//                               + String (gameObjectInstanceID)
-//                               + String ("]")
-//                               + String (" Param: ")
-//                               + param
-//                               + String (" value = ")
-//                               + String (content));
+    //    Logger::outputDebugString (String ("String: ")
+    //                               + name
+    //                               + String (" [id = ")
+    //                               + String (gameObjectInstanceID)
+    //                               + String ("]")
+    //                               + String (" Param: ")
+    //                               + param
+    //                               + String (" value = ")
+    //                               + String (content));
 }
 
 void MainContentComponent::handleOther (String const& name, String const& t, String const& value)

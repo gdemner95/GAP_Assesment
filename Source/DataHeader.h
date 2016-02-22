@@ -68,7 +68,11 @@ public:
     void doStandardImpact (String const& objectNameKey, Collision const& collision){
         
     }
-
+    
+    
+    
+    
+    
 private:
     FMOD_3D_ATTRIBUTES attr3d;    ///< The object vectors for position, velocity, forward (orientation), and "up" (also orientation)
     Array<EventInstance*> events; ///< The array of event instances
