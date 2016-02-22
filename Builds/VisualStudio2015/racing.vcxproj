@@ -915,6 +915,9 @@ copy ..\..\..\..\..\libs\fmod\fmodstudioapi\api\studio\lib\fmodstudio.dll .</Com
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
+    <ClInclude Include="..\..\Source\CarObject.h"/>
+    <ClInclude Include="..\..\Source\DataHeader.h"/>
+    <ClInclude Include="..\..\Source\Event Paths.h"/>
     <ClInclude Include="..\..\..\..\common\ConnectionServer.h"/>
     <ClInclude Include="..\..\..\..\common\PointerDictionary.h"/>
     <ClInclude Include="..\..\..\..\common\GameEngineServer.h"/>

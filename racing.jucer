@@ -9,6 +9,11 @@
           file="Source/MainComponent.cpp"/>
     <FILE id="id9T0y" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
     <GROUP id="{7FD63A2B-344E-E9C9-2AEB-87D55ACD2264}" name="Source">
+      <GROUP id="{BBFB06F5-EB29-A023-F4E9-0EC7A9C120D2}" name="Objects">
+        <FILE id="QCWz0s" name="CarObject.h" compile="0" resource="0" file="Source/CarObject.h"/>
+      </GROUP>
+      <FILE id="a3ZeXP" name="DataHeader.h" compile="0" resource="0" file="Source/DataHeader.h"/>
+      <FILE id="JpEdQF" name="Event Paths.h" compile="0" resource="0" file="Source/Event Paths.h"/>
       <FILE id="GeaiRd" name="GameEnginerServerCopy.cpp" compile="1" resource="0"
             file="Source/GameEnginerServerCopy.cpp"/>
       <FILE id="lf1qMo" name="ConnectionServerCopy.cpp" compile="1" resource="0"

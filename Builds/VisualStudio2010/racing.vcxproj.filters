@@ -8,6 +8,9 @@
     <Filter Include="racing\Source">
       <UniqueIdentifier>{75B2DE6B-A594-F41F-0931-FFA07E4A2C13}</UniqueIdentifier>
     </Filter>
+    <Filter Include="racing\Source\Objects">
+      <UniqueIdentifier>{E3BE4812-3EF6-3F7D-13BB-92C85F31E58A}</UniqueIdentifier>
+    </Filter>
     <Filter Include="racing\Common">
       <UniqueIdentifier>{BBA18540-63A0-9ADD-4CB3-C31E9FE940AB}</UniqueIdentifier>
     </Filter>
@@ -1028,6 +1031,15 @@
   <ItemGroup>
     <ClInclude Include="..\..\Source\MainComponent.h">
       <Filter>racing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\CarObject.h">
+      <Filter>racing\Source\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DataHeader.h">
+      <Filter>racing\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Event Paths.h">
+      <Filter>racing\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\common\ConnectionServer.h">
       <Filter>racing\Common</Filter>

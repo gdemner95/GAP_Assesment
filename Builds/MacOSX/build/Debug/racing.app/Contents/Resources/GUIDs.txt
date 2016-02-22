@@ -1,0 +1,26 @@
+{0851a09d-833f-42b3-9346-13456c352bba} event:/car/crash
+{ce033e31-8129-422d-a93b-68ed4173f55a} event:/car/engine
+{d64b2bdf-5955-4a2e-b86b-9c7233d29d53} event:/car/gear
+{9b2e0b98-1110-477b-b70d-02250cd59d37} event:/car/skid
+{87887acc-28e6-47bd-be09-368b92f638c3} event:/car/tyres
+{6cce07c4-5522-4b27-aea4-f2538ba42758} event:/environment/atmos
+{3efd7e8f-889b-4a26-a52d-9b64d3f7cd33} event:/environment/crowd
+{299c21ed-6be2-4e59-9f9d-6dce4e9cfea2} event:/environment/electric-wires
+{a47f81a4-400a-45dd-a774-58417be78c1b} event:/reverbs/overbridge
+{b95316f1-c888-483b-9e8a-a8cbb1283e80} event:/reverbs/tunnel
+{b799721a-8aec-4d94-adf8-44e5e07083de} event:/reverbs/underbridge
+{b788ea6c-da73-4f7d-8e5a-8534d1f321d5} bus:/
+{cce7918a-2016-465a-82f9-bff4ac10542d} bus:/gear
+{fd76d044-433b-4912-b69c-a310ca147191} bus:/atmos
+{551e9f64-a8c3-4d9e-a636-942edbeba7b1} bus:/crash
+{17f71fd1-2cab-4d73-85c0-80b7eb546f39} bus:/engine
+{9f9a4086-1e35-420f-8612-2c936128957a} bus:/environment
+{4840109b-b87b-479f-8214-cfafea8b1c56} bus:/skid
+{b4591ade-489f-4499-80e2-0bcfa91bd905} bus:/tyres
+{9681b983-d27e-4e98-b5b7-d28d043ca6cd} bus:/Reverb
+{8a01165e-09e5-48ba-a8a4-87d91668d059} vca:/Environment
+{a30d78aa-44e3-4d07-a731-ae31dce4bb20} vca:/Car
+{5b29c573-0af4-4fc4-b195-31ec06121a24} snapshot:/tunnel
+{9ab8770d-c8a4-4bb7-8897-fa68396842b3} snapshot:/overbridge
+{dee12aeb-8071-410e-9964-96dc7706480f} snapshot:/underbridge
+{1ee22370-d184-42de-9ca2-040ac4a9edca} bank:/Master Bank
